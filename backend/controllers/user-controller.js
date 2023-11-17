@@ -1,9 +1,9 @@
-const User = require('../models/user-model');
+const User = require('../models/user-schema');
 const AppError = require('../utils/app-error');
 const { asyncHandler } = require('../utils/async-handler');
 
 exports.getMyProfile = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id).select('-__v');
 
   res.status(200).json({
     status: 'success',
@@ -42,7 +42,7 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
 });
 
 exports.getUserById = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id).select('-__v');
 
   if (!user) {
     return next(new AppError('User not found', 404));

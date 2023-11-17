@@ -3,6 +3,9 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 
 const userRouter = require('./routes/user-routes');
+const categoryRouter = require('./routes/category-routes');
+const courseRouter = require('./routes/course-routes');
+
 const { errorHandler } = require('./middlewares/error-handler');
 const AppError = require('./utils/app-error');
 
@@ -28,6 +31,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/users', userRouter);
+app.use('/api/category', categoryRouter);
+app.use('/api/courses', courseRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
