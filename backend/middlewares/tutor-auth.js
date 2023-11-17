@@ -6,10 +6,14 @@ const { asyncHandler } = require('../utils/async-handler');
 exports.isAuthorized = asyncHandler(async (req, res, next) => {
   const course = await Course.findById(req.params.id);
 
-  console.log(course);
+  const instructorId = course.instructor.toString();
+  const currentUser = req.user._id.toString();
 
   if (req.user.isAdmin) {
     next();
-  } else if (course) {
+  } else if (currentUser !== instructorId) {
+    return next(new AppError('You do not have permission', 400));
   }
+
+  next();
 });
