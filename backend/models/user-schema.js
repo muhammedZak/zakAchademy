@@ -31,6 +31,13 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: true,
   },
+  enrolledCourses: [
+    {
+      course: { type: mongoose.Schema.ObjectId, ref: 'Course' },
+      enrollmentDate: { type: Date, default: Date.now },
+    },
+  ],
+  taughtCourses: [{ type: mongoose.Schema.ObjectId, ref: 'Course' }],
   password: {
     type: String,
     required: true,

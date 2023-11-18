@@ -3,7 +3,9 @@ const AppError = require('../utils/app-error');
 const { asyncHandler } = require('../utils/async-handler');
 
 exports.getMyProfile = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user._id).select('-__v');
+  const user = await User.findById(req.user._id)
+    .populate('taughtCourses')
+    .select('-__v');
 
   res.status(200).json({
     status: 'success',

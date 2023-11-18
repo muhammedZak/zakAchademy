@@ -17,6 +17,12 @@ const courseSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
+  studentsEnrolled: [
+    {
+      student: { type: mongoose.Schema.ObjectId, ref: 'User' },
+      enrollmentDate: { type: Date, default: Date.now },
+    },
+  ],
   learnings: {
     type: Array,
   },
@@ -47,6 +53,12 @@ const courseSchema = new mongoose.Schema({
   requirements: {
     type: Array,
   },
+  sections: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Section',
+    },
+  ],
   ratingsAverage: {
     type: Number,
     default: 4.5,

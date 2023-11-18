@@ -24,7 +24,11 @@ exports.createCourse = asyncHandler(async (req, res, next) => {
     banner: req.body.banner,
   });
 
-  await User.findByIdAndUpdate(req.user._id, { isInstructor: true });
+  const user = await User.findById(req.user._id);
+  user.isInstructor = true;
+  user.taughtCourses.push(newCourse._id);
+
+  await user.save();
 
   res.status(201).json({
     status: 'success',
